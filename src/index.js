@@ -4,9 +4,6 @@ const tough = require('tough-cookie');
 
 const parser = require("htmlparser2");
 
-const jar = new tough.CookieJar();
-const client = wrapper(axios.create({ jar }));
-
 const CONFIG = require('./config.js');
 const USER = require('./credentials.json');
 
@@ -27,6 +24,9 @@ function parseRow (row) {
 }
 
 async function getData () {
+	const jar = new tough.CookieJar();
+	const client = wrapper(axios.create({ jar }));
+
 	const getSessionToken = await client.get('https://erp.iitkgp.ac.in/IIT_ERP3');
 	const sessionToken = getSessionToken.request.path.split('sessionToken=')[1].split('&')[0];
 	let securityAnswer;
